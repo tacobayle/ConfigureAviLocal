@@ -1,0 +1,14 @@
+---
+- hosts: ubuntu
+  gather_facts: no
+
+  tasks:
+  - name: Create a directory
+    file:
+      path: .ssh
+      state: directory
+
+  - name: copy ssh keys for putty
+    copy:
+      src: "{{ AuthorizedKeyFile }}"
+      dest: .ssh/{{ AuthorizedKeyFileBaseName }}

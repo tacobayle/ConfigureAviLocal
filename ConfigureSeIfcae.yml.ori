@@ -1,0 +1,19 @@
+- hosts: ServiceEngine
+  gather_facts: no
+  become: true
+  become_user: root
+  become_method: sudo
+
+  tasks:
+  - name: configure IP of Service Engine
+    become: true
+    shell: |
+       ip address add "{{ SeIfaceIp }}" dev "{{ SeIface }}"
+       ip link set "{{ SeIface }}" up
+
+    register: shellvalue
+
+  - name: show output
+    debug:
+      var: shellvalue.stdout
+
