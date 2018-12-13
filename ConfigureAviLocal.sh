@@ -6,8 +6,6 @@ AviControllerIp=$1
 AviUsername=$2
 AviPassword=$3
 AviSeListFile=$4
-#AviSeUsername=$5
-#AviSePassword=$6
 AuthorizedKeyFile="/home/avi/ssh/authorized_keys"
 AviControllerCpu="6"
 AviControllerMem="16"
@@ -44,7 +42,6 @@ echo "        controller:
 ansible-playbook -i hosts --extra-vars="AuthorizedKeyFile=$AuthorizedKeyFile AuthorizedKeyFileBaseName=$AuthorizedKeyFileBaseName" TransferSshKey.yml
 ansible-playbook -i hosts AptUpdateUpgradeDocker.yml
 ansible-playbook -i hosts --extra-vars="AviControllerCpu=$AviControllerCpu AviControllerMem=$AviControllerMem AviControllerIp=$AviControllerIp AviBinFile=$AviBinFile AviBinFileBaseName=$AviBinFileBaseName" InstallAviSoftware.yml
-#ansible-playbook -i hosts --extra-vars="bin_filename=docker_install-18.1.3-9144.tar.gz ip_controller=193.168.17.151" 03-install-controller.yml
 i=1
 for ip in `cat $AviSeListFile | grep -v iface`
   do
@@ -58,8 +55,3 @@ for ip in `cat $AviSeListFile | grep -v iface`
   i=$((i+1))
   done
 rm -f hosts
-#
-#ansible-playbook -i hosts --extra-vars="iface=eth1 ip=2.1.1.11/8" 05-ipconfig-se1.yml
-#ansible-playbook -i hosts --extra-vars="iface=eth2 ip=172.16.1.101/24" 05-ipconfig-se1.yml
-#ansible-playbook -i hosts --extra-vars="iface=eth1 ip=2.1.1.12/8" 05-ipconfig-se2.yml
-#ansible-playbook -i hosts --extra-vars="iface=eth2 ip=172.16.1.102/24" 05-ipconfig-se2.yml
